@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>JS Prime Pyramid</title>
+<style>
+body {
+	font-size: 0.625em;
+	line-height: 0.2em;
+	letter-spacing: -.3em;
+	font-weight: bold;
+}
+p {
+	margin: 0;
+	padding: 0;
+}
+#pyramid_container {
+	text-align: center;
+	font-family: courier;
+	position: absolute;
+}
+#pyramid_container > p > a {
+	color: #C3C3C3;
+}
+</style>
+<script>
+window.onload=function() {
+	var pyramid = new Pyramid(300);
+	pyramid.show();
+	pyramid = null;
+};
+function Pyramid(height) {
+	this.height = height;
+}
+Pyramid.prototype = {
+	constructor: Pyramid,
+	show: function() {
+		this.rowsize = 1;
+		this.html = "<p>";
+		this.itemcount = 0;
+		for(var i = 0; i < this.height * this.height; i++) {
+			this.itemcount++;
+			if(isPrime(i)) {
+				this.html += ".";
+			} else {
+				this.html += "<a>.</a>";
+			}
+			if (this.rowsize === this.itemcount) {
+				this.html += "</p><p>";
+				this.rowsize += 2;
+				this.itemcount = 0;
+			}
+	}
+	document.getElementById('pyramid_container').innerHTML = this.html;
+	this.html = null;
+	}
+};
+function isPrime(n) {
+	if (isNaN(n) || !isFinite(n) || n%1 || n<2) return false; 
+	if (n%2==0) return (n==2);
+	if (n%3==0) return (n==3);
+	var m=Math.sqrt(n);
+	for (var i=5;i<=m;i+=6) {
+		if (n%i==0)     return false;
+		if (n%(i+2)==0) return false;
+	}
+	return true;
+}
+</script>
+</head>
+<body>
+	<div id="pyramid_container">
+	</div>
+</body>
+</html>
